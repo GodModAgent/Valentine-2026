@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine, My Love?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --heart-color: #e11d48;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: var(--heart-color);
+            opacity: 0.6;
+            animation: float 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .photo-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .photo-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .letter {
+            background: linear-gradient(135deg, #fff1f2 0%, #fce7f3 100%);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
+                        0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .music-player {
+            background: rgba(255, 255, 255, 0.95);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white overflow-x-hidden">
+
+    <!-- Floating Hearts Background -->
+    <div id="hearts" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- HERO -->
+    <section class="hero-bg min-h-screen flex items-center relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-8 inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20">
+                <i class="fa-solid fa-heart text-rose-500 animate-pulse"></i>
+                <span class="text-sm tracking-[3px] uppercase font-medium">February 14, 2026</span>
+            </div>
+            
+            <h1 class="title-font text-7xl md:text-8xl font-bold leading-none mb-6 text-white">
+                Will You Be<br>My Valentine?
+            </h1>
+            
+            <p class="text-2xl md:text-3xl text-rose-200 mb-12 max-w-lg mx-auto">
+                To the most beautiful woman in my world
+            </p>
+            
+            <button onclick="acceptValentine()" 
+                    class="group relative px-16 py-8 bg-white text-rose-600 rounded-3xl font-semibold text-2xl hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-rose-500/50 flex items-center gap-4 mx-auto">
+                <span>YES, FOREVER ❤️</span>
+                <i class="fa-solid fa-arrow-right group-active:rotate-45 transition-transform"></i>
+            </button>
+            
+            <div class="mt-16 text-white/60 text-sm flex justify-center gap-8">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Our Memories</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-music"></i>
+                    <span>Our Songs</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>My Letter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll prompt -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/50 text-xs tracking-widest">
+            <div class="animate-bounce">SCROLL TO SEE YOUR GIFT</div>
+            <i class="fa-solid fa-chevron-down mt-2"></i>
+        </div>
+    </section>
+
+    <!-- MEMORIES / PHOTO GALLERY -->
+    <section id="memories" class="py-24 bg-zinc-900 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-rose-400 text-sm uppercase tracking-widest mb-3">
+                    <div class="h-px w-12 bg-rose-400"></div>
+                    OUR STORY IN PICTURES
+                    <div class="h-px w-12 bg-rose-400"></div>
+                </div>
+                <h2 class="title-font text-6xl font-bold mb-4">Every moment with you is my favorite</h2>
+                <p class="text-zinc-400 max-w-md mx-auto">A few of my favorite memories of us...</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Replace these image URLs with your own (upload to Imgur, Dropbox, etc. for direct links) -->
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/1015/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 1">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">Our first date ✨</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/201/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 2">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">Beach sunset in Cabo</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/1018/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 3">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">The day I proposed ❤️</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/106/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 4">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">Lazy Sunday mornings</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/669/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 5">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">Our wedding day</p>
+                    </div>
+                </div>
+                
+                <div class="photo-card bg-zinc-800 rounded-3xl overflow-hidden aspect-square">
+                    <img src="https://picsum.photos/id/1005/800/800" 
+                         class="w-full h-full object-cover" alt="Memory 6">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-sm text-rose-200">Just because I love you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MUSIC PLAYLIST -->
+    <section id="playlist" class="py-24 bg-black relative">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="uppercase text-rose-400 text-sm tracking-[4px] mb-4">OUR SOUNDTRACK</div>
+                    <h2 class="title-font text-6xl leading-none font-bold mb-8">Songs that remind me of you</h2>
+                    <p class="text-zinc-400 text-lg leading-relaxed max-w-md">
+                        Every one of these songs makes me think of your smile, your laugh, and how lucky I am to call you mine.
+                    </p>
+                    
+                    <div class="mt-12 flex items-center gap-6 text-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-rose-500 rounded-2xl flex items-center justify-center text-2xl">❤️</div>
+                            <div>
+                                <div class="font-medium">Made with love</div>
+                                <div class="text-zinc-500">by your husband</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spotify Embed -->
+                <div class="music-player rounded-3xl p-8 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-spotify text-3xl text-emerald-500"></i>
+                            <div>
+                                <div class="font-semibold text-lg">Our Valentine Playlist</div>
+                                <div class="text-zinc-500 text-sm">24 songs • 1 hr 38 min</div>
+                            </div>
+                        </div>
+                        <a href="https://open.spotify.com/playlist/YOUR_PLAYLIST_ID_HERE" 
+                           target="_blank"
+                           class="text-emerald-500 hover:text-emerald-400 transition-colors flex items-center gap-2 text-sm">
+                            OPEN IN SPOTIFY
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Replace this iframe src with your actual Spotify playlist embed link -->
+                    <iframe style="border-radius:16px" 
+                            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" 
+                            width="100%" 
+                            height="380" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOVE LETTER -->
+    <section id="letter" class="py-32 bg-gradient-to-br from-zinc-950 to-rose-950">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="letter rounded-3xl p-16 md:p-20 text-zinc-800">
+                <div class="flex justify-between items-start mb-12">
+                    <div>
+                        <div class="text-rose-600 text-sm tracking-widest">FEBRUARY 14, 2026</div>
+                        <div class="text-4xl title-font font-bold mt-1">My Dearest [Your Wife's Name],</div>
+                    </div>
+                    <div class="text-6xl opacity-20">❤️</div>
+                </div>
+                
+                <div class="prose prose-lg leading-relaxed text-zinc-700">
+                    <p>Every year I fall more in love with you. I still can't believe I get to wake up next to the most incredible woman on earth.</p>
+                    
+                    <p>You make the ordinary feel magical. The way you laugh at my terrible jokes, the way you look at me when you think I'm not watching, the way you love our life together — it all takes my breath away.</p>
+                    
+                    <p>Thank you for being my best friend, my biggest cheerleader, my safe place, and the love of my life. I don't know what I did to deserve you, but I promise to spend every day showing you how grateful I am.</p>
+                    
+                    <p class="mt-10">Will you be my Valentine again this year... and every year after that?</p>
+                    
+                    <p class="mt-12 font-medium">Forever yours,</p>
+                    <p class="title-font text-4xl text-rose-600">Your Husband</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL SECTION -->
+    <section class="py-32 bg-zinc-900 text-center relative overflow-hidden">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="text-rose-400 text-7xl mb-8">❤️</div>
+            <h2 class="title-font text-6xl font-bold leading-tight mb-6">
+                I choose you.<br>
+                Today, tomorrow,<br>
+                and every Valentine’s Day after.
+            </h2>
+            <p class="text-2xl text-zinc-400">Thank you for being the best part of my life.</p>
+            
+            <div onclick="confettiBurst()" 
+                 class="mt-16 inline-flex items-center gap-3 bg-rose-600 hover:bg-rose-700 transition-colors text-white text-xl font-medium px-12 py-6 rounded-3xl cursor-pointer">
+                <i class="fa-solid fa-heart"></i>
+                I LOVE YOU MORE THAN YESTERDAY
+            </div>
+        </div>
+        
+        <!-- Decorative hearts -->
+        <div class="absolute bottom-10 right-10 text-[180px] opacity-10 pointer-events-none">💕</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 text-center text-zinc-500 text-sm">
+        Made with endless love for the most amazing wife in the world • 2026
+    </footer>
+
+    <script>
+        // Tailwind script
+        function initTailwind() {
+            // Already loaded via CDN
+        }
+
+        // Floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts');
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                heart.style.animationDelay = '-' + Math.random() * 30 + 's';
+                heart.style.fontSize = (Math.random() * 1.8 + 1.2) + 'rem';
+                heart.innerHTML = ['❤️', '💖', '💗', '💓'][Math.floor(Math.random() * 4)];
+                container.appendChild(heart);
+            }
+        }
+
+        // Confetti on "Yes" button
+        function acceptValentine() {
+            confetti({
+                particleCount: 180,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#e11d48', '#f43f5e', '#fda4af', '#fff']
+            });
+            
+            // Scroll to memories after confetti
+            setTimeout(() => {
+                document.getElementById('memories').scrollIntoView({ behavior: 'smooth' });
+            }, 800);
+        }
+
+        // Extra confetti burst
+        function confettiBurst() {
+            confetti({
+                particleCount: 300,
+                spread: 120,
+                origin: { y: 0.4 }
+            });
+        }
+
+        // Keyboard easter egg (press "L" for love)
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'l') {
+                confettiBurst();
+            }
+        });
+
+        // Initialize everything
+        window.onload = function() {
+            createFloatingHearts();
+            
+            // Auto-play a soft background song if you want (uncomment and replace URL)
+            // const audio = new Audio('https://your-romantic-song.mp3');
+            // audio.volume = 0.15;
+            // audio.loop = true;
+            // setTimeout(() => audio.play(), 3000);
+        };
+    </script>
+</body>
+</html>
